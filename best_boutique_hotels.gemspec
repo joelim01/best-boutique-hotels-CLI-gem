@@ -2,7 +2,7 @@ Gem::Specification.new do |s|
   s.name        = 'best_boutique_hotels'
   s.version     = '0.0.0'
   s.date        = '2016-06-14'
-  s.summary     = "A CLI for www.boutiquehotels.com's best hotels list."
+  s.summary     = "A CLI for www.boutiquehotelawards.com's best hotels list."
   s.description = "A simple gem"
   s.authors     = ["Joseph Lim"]
   s.email       = 'joseph.d.lim.@.gmail'
