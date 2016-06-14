@@ -1,1 +1,1 @@
-require_all 'lib'
+
