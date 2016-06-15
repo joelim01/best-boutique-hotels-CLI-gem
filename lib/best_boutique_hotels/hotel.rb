@@ -10,7 +10,8 @@ class Hotel
   end
 
   def self.create_from_collection(hotels_array)
-    hotels_array.each {|hotel| Hotel.new(hotel)}
+    new_hotels = hotels_array.collect {|hotel| Hotel.new(hotel)}
+    new_hotels
   end
 
   def add_hotel_attributes(attributes_hash)

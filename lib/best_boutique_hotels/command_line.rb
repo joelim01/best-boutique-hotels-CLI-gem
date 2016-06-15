@@ -23,11 +23,10 @@ class CommandLineInterface
   def make_hotels
     hotels_array = []
     Category.all.each do |category|
-      category_hotels = Scraper.scrape_category_page(category.url)
-      (hotels_array << category_hotels).flatten!
+      hotels_array = Scraper.scrape_category_page(category.url)
+      category_hotels = Hotel.create_from_collection(hotels_array)
       category.add_hotels(category_hotels)
     end
-    Hotel.create_from_collection(hotels_array)
   end
 
 

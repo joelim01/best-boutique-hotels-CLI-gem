@@ -26,9 +26,9 @@ class Scraper
     doc = Nokogiri::HTML(open(category_url))
     hotel_links = doc.css('h3.title-hotel-row a').collect {|el| el['href'].strip }
     hotel_names = doc.css('h3.title-hotel-row a').collect {|el| el.text.strip }
-    category = doc.css('h2.location_name').text.strip
+    # category = doc.css('h2.location_name').text.strip
     hotel_names.each_with_index do |hotel, index|
-      hotel_array << Hash[hotel_name: hotel, hotel_url: hotel_links[index], category: category]
+      hotel_array << Hash[hotel_name: hotel, hotel_url: hotel_links[index]]
     end
 
     hotel_array

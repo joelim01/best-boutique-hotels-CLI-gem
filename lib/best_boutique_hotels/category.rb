@@ -11,7 +11,12 @@ class Category
   end
 
   def add_hotels(hotels_array)
-    hotels_array.each {|hotel| @hotels << hotel unless @hotels.include?(hotel)}
+    hotels_array.each do |hotel|
+      unless @hotels.include?(hotel)
+        @hotels << hotel
+        hotel.category = self
+      end
+    end
   end
 
   def self.create_from_collection(categories_array)
