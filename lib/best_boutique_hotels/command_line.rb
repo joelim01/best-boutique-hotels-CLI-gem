@@ -18,18 +18,16 @@ class CommandLineInterface
   def make_categories
     categories_array = Scraper.scrape_index_page(BASE_URL)
     Category.create_from_collection(categories_array)
-    binding.pry
   end
 
   def make_hotels
     hotels_array = []
-    Categories.all.each do |category|
+    Category.all.each do |category|
       category_hotels = Scraper.scrape_category_page(category.url)
       (hotels_array << category_hotels).flatten!
       category.add_hotels(category_hotels)
     end
     Hotel.create_from_collection(hotels_array)
-    binding.pry
   end
 
 

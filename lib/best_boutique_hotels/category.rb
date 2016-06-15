@@ -1,21 +1,22 @@
 class Category
 
-  attr_accessor :name, :url
+  attr_accessor :name, :url, :hotels
 
   @@all = []
 
   def initialize(name, url)
     @name = name
     @url = url
+    @hotels = []
   end
 
   def add_hotels(hotels_array)
-    hotels_array.each {|hotel| self.all << hotel unless self.all.include?(hotel)}
+    hotels_array.each {|hotel| @hotels << hotel unless @hotels.include?(hotel)}
   end
 
   def self.create_from_collection(categories_array)
     categories_array.each_with_index do |category|
-      Category.new(category[:category_name], category[:category_url])
+      self.all << Category.new(category[:category_name], category[:category_url])
     end
   end
 
