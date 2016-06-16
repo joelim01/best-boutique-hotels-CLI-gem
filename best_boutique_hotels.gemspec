@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'best_boutique_hotels'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.date        = '2016-06-14'
   s.summary     = "A CLI for www.boutiquehotelawards.com's best hotels list."
   s.description = "A simple gem"
@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
   s.homepage    = ''
   s.license     = 'MIT'
   s.executables << 'best_boutique_hotels'
-  s.add_runtime_dependency "require_all",'~> 1.3', ">=1.3.3"
   s.add_runtime_dependency "nokogiri",'~> 1.6', ">=1.6.8"
   s.add_runtime_dependency "bundler",'~> 1.12', ">=1.12.5"
   s.add_runtime_dependency "ruby-progressbar", '~> 1.8', ">=1.8.1"
