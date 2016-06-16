@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'best_boutique_hotels'
-  s.version     = '0.1.0'
+  s.version     = '0.1.1'
   s.date        = '2016-06-14'
   s.summary     = "A CLI for www.boutiquehotelawards.com's best hotels list."
   s.description = "A simple gem"
