@@ -16,7 +16,7 @@ And then follow the onscreen directions to navigate.
 
 ## Contributing
 
-Log a problem or leave a comment at GitHub at https://github.com/joelim01/best-boutique-hotels-CLI-gem 
+Log an issue or leave a comment via GitHub at https://github.com/joelim01/best-boutique-hotels-CLI-gem 
 
 ## License
 
