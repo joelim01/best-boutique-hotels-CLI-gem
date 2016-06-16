@@ -1,4 +1,4 @@
-require_relative "../best_boutique_hotels.rb"
+# require_relative "../best_boutique_hotels.rb"
 
 class CommandLineInterface
   BASE_URL = "http://www.boutiquehotelawards.com/boutique-hotels/latest-winners/"

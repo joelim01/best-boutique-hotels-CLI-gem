@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require_relative '../lib/best_boutique_hotels.rb'
 
 CommandLineInterface.new.run
