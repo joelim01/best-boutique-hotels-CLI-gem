@@ -1,6 +1,7 @@
-require 'pry'
 require 'nokogiri'
+require 'colorize'
+require 'pry'
+require 'ruby-progressbar'
+require 'require_all'
 require 'open-uri'
-require 'best_boutique_hotels'
-
 require_all 'lib'

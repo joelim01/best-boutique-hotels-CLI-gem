@@ -1,10 +1,4 @@
-require_relative "../best_boutique_hotels/scraper.rb"
-require_relative "../best_boutique_hotels/hotel.rb"
-require_relative "../best_boutique_hotels/category.rb"
-require 'nokogiri'
-require 'colorize'
-require 'pry'
-require 'ruby-progressbar'
+require_relative "../best_boutique_hotels.rb"
 
 class CommandLineInterface
   BASE_URL = "http://www.boutiquehotelawards.com/boutique-hotels/latest-winners/"
@@ -16,7 +10,6 @@ class CommandLineInterface
     make_categories
     make_hotels
     add_details_to_hotels
-    binding.pry
     begin_navigation
   end
 
@@ -61,7 +54,7 @@ class CommandLineInterface
     puts ""
     puts "Choose a category to view hotels.".white.on_blue.underline
     c_index = gets.strip
-    if c_index.to_i.between?(1, Category.all.size+1)
+    if c_index.to_i.between?(1, Category.all.size)
       @current_category_index = c_index.to_i-1
       list_hotels(c_index.to_i-1)
     else
@@ -84,11 +77,11 @@ class CommandLineInterface
     puts ""
     puts "Choose a hotel to view details.".white.on_blue
     h_index = gets.strip
-    if h_index.to_i.between?(1, @current_category.hotels.size+1)
+    if h_index.to_i.between?(1, @current_category.hotels.size)
       view_hotel(@current_category.hotels[h_index.to_i-1])
     else
       puts "Oops, that's not a valid hotel.".colorize(:red)
-      category_navigation
+      hotel_navigation
     end
   end
 
@@ -103,51 +96,51 @@ class CommandLineInterface
     puts wrap("  Number of Rooms: ".colorize(:blue) + "#{hotel.number_of_rooms}")
     puts wrap("  Price: ".colorize(:blue) + "#{hotel.price}")
     hotel.notes.each_with_index do |note, i|
-      i == 0 ? (puts wrap("  Additional Details:\n".colorize(:blue) + "    #{note}")) : (puts wrap("    #{note}"))
+      i == 0 ? (puts "  Additional Details:\n".colorize(:blue)  + wrap("    #{note}")) : (puts wrap("    #{note}"))
     end
-    repeat_navigation
+    continue?
   end
 
-  def repeat_navigation
+  def continue?
     puts ""
     puts "Would you like to continue? (Y/N)".white.on_blue
     answer = gets.strip.upcase
     if answer == "Y"
-      puts wrap("Would you like to go (back) to the hotel listings for #{@current_category.name} or go to the (categories) page?")
-      answer = gets.strip.downcase
-        if answer == "back"
-          list_hotels(@current_category_index)
-        elsif
-          answer == "categories"
-          @current_category = ""
-          @current_category_index = 0
-          begin_navigation
-        else
-          repeat_navigation
-        end
+      repeat_navigation
     elsif
       answer == "N"
+      puts "Bye!"
       exit
     else
-      repeat_navigation
+      "I didn't understand you."
+      continue?
     end
   end
 
-  def wrap(string, line_width=70)
+  def repeat_navigation
+    puts wrap("Would you like to go (back) to the hotel listings for #{@current_category.name} or go to the (categories) page?")
+    answer = gets.strip.downcase
+      if answer == "back"
+        list_hotels(@current_category_index)
+      elsif
+        answer == "categories"
+        @current_category = ""
+        @current_category_index = 0
+        begin_navigation
+      else
+        repeat_navigation
+      end
+    end
+  end
+
+  def wrap(string, line_width=78)
     return string if string.length <= line_width
     if string[0...line_width].index(" ") != nil
       space_index = (line_width-1) - string[0...line_width].reverse.index(" ")
-      string[0...space_index] + "\n        " + wrap(string[space_index+1..-1], line_width-8)
+      string[0...space_index] + "\n     " + wrap(string[space_index+1..-1], line_width-5)
     elsif string[line_width] == " "
-      string[0...line_width] + "\n        " + wrap(string[line_width+1..-1], line_width-8)
+      string[0...line_width] + "\n     " + wrap(string[line_width+1..-1], line_width-5)
     else
-      string[0...line_width] + "\n        " + wrap(string[line_width..-1], line_width-8)
+      string[0...line_width] + "\n     " + wrap(string[line_width..-1], line_width-5)
     end
   end
-
-end
-
-
-
-command = CommandLineInterface.new
-command.run
