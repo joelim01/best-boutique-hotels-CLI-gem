@@ -20,11 +20,9 @@ class CommandLineInterface
   end
 
   def make_hotels
-    hotels_array = []
     Category.all.each do |category|
       hotels_array = Scraper.scrape_category_page(category.url)
-      category_hotels = Hotel.create_from_collection(hotels_array)
-      category.add_hotels(category_hotels)
+      Hotel.create_from_collection(hotels_array, category)
       puts "#{category.name} created.".colorize(:blue)
     end
   end

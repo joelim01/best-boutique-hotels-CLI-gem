@@ -4,14 +4,15 @@ class Hotel
 
   @@all = []
 
-  def initialize(hotel_details)
+  def initialize(hotel_details, category)
     hotel_details.each {|key, value| self.send(("#{key}="), value)}
+    self.category = category
     self.class.all << self
+    category.hotels << self
   end
 
-  def self.create_from_collection(hotels_array)
-    new_hotels = hotels_array.collect {|hotel| Hotel.new(hotel)}
-    new_hotels
+  def self.create_from_collection(hotels_array, category)
+    hotels_array.collect {|hotel| Hotel.new(hotel, category)}
   end
 
   def add_hotel_attributes(attributes_hash)

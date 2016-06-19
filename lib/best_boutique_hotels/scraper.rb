@@ -1,28 +1,23 @@
 class Scraper
 
   def self.scrape_index_page(index_url)
-    categories_array = []
-    hotels_array = []
-
     doc = Nokogiri::HTML(open(index_url))
-    category_links = doc.css('div.overlay-content-cat a').collect {|el| el['href'] }
-    category_names = doc.css('div.overlay-content-cat a').collect {|el| el.text.strip }
-
-    category_names.each_with_index do |category, index|
-      categories_array << Hash[category_name: category, category_url: category_links[index]]
+    doc.css('div.overlay-content-cat a').collect do |category|
+      category_attribues = {
+        :category_url => category['href'],
+        :category_name => category.text.strip
+      }
     end
-    categories_array
   end
 
   def self.scrape_category_page(category_url)
-    hotel_array = []
     doc = Nokogiri::HTML(open(category_url))
-    hotel_links = doc.css('h3.title-hotel-row a').collect {|el| el['href'].strip }
-    hotel_names = doc.css('h3.title-hotel-row a').collect {|el| el.text.strip }
-    hotel_names.each_with_index do |hotel, index|
-      hotel_array << Hash[hotel_name: hotel, hotel_url: hotel_links[index]]
+    hotel_array = doc.css('h3.title-hotel-row a').collect do |hotel|
+      hotel_attributes = {
+        :hotel_url => hotel['href'],
+        :hotel_name => hotel.text.strip
+      }
     end
-    hotel_array
   end
 
   def self.scrape_hotel_page(hotel_url)
@@ -35,6 +30,7 @@ class Scraper
     number_of_rooms = nil
 
     doc = Nokogiri::HTML(open(hotel_url))
+
     location = doc.css('div.address-section div li')[0].text unless doc.css('div.address-section div li')[0] == nil
     hotel_website = doc.css('div.action-link-hotel a')[1]['href'] unless (doc.css('div.action-link-hotel a')[1] == nil || doc.css('div.action-link-hotel a')[1]['href'].include?('boutiquehotelawards'))
     headline = doc.css('div.tag-line').text unless doc.css('div.tag-line') == nil
